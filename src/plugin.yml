@@ -1,0 +1,12 @@
+name: RoodCore
+version: 1.0
+description: R00DCore
+author: cooltimmetje
+main: me.cooltimmetje.RoodCore.Main
+commands:
+    time:
+        description: time
+    cooldown:
+        description: cooldown
+    tokens:
+        description: tokens
