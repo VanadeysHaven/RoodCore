@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,18 +31,19 @@ public class TokensShop implements CommandExecutor,Listener{
     public HashMap<Integer, String> rankNames = new HashMap<Integer, String>();
     public HashMap<String, Integer> rankID = new HashMap<String, Integer>();
 
-    int rankCost = 500;
+    int rankCost = 250;
+    int codeTimCost = 80;
 
     public void shopGUI(Player p){
         Inventory inv = Bukkit.createInventory(null, 36, "&7&oToken Shop".replace('&', '§'));
 
-        Main.createDisplay(Material.NETHER_STAR, 1, 0, "&a&lRankup", "&7&lClick here to buy a rankup!", inv, 14);
+        Main.createDisplay(Material.NETHER_STAR, 1, 0, "&a&lRankup", "&7&lClick here to buy a rankup!", inv, 13);
+        Main.createDisplay(Material.CHEST, 1, 0, "&a&lShop", "&7&lClick here to buy a cool stuff!", inv, 15);
 
         Main.createDisplay(Material.GOLD_NUGGET, 1, 0, "&a&lYour tokens: &b" + Tokens.tokens.get(p.getName()), null, inv, 32);
 
         p.openInventory(inv);
     }
-
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
@@ -65,9 +67,10 @@ public class TokensShop implements CommandExecutor,Listener{
 
         switch (event.getCurrentItem().getType()){
             case NETHER_STAR:
-//                if(p.getName() != "Cooltimmetje" || p.getName() != "ThoThoKill"){
                 openRankup(p);
                 break;
+            case CHEST:
+                openShop(p);
             default:
                 break;
         }
@@ -77,10 +80,14 @@ public class TokensShop implements CommandExecutor,Listener{
         if(rankNames.isEmpty()){
             rankNames.put(1, "User");
             rankNames.put(2, "UserPlus");
+            rankNames.put(3, "UserPlusPlus");
+            rankNames.put(4, "Noob");
         }
         if(rankID.isEmpty()){
             rankID.put("User", 1);
             rankID.put("UserPlus", 2);
+            rankID.put("UserPlusPlus", 3);
+            rankID.put("Noob", 4);
         }
         Inventory inv = Bukkit.createInventory(null, 27, "&7&oRankup".replace('&', '§'));
 
@@ -127,7 +134,7 @@ public class TokensShop implements CommandExecutor,Listener{
         switch (event.getCurrentItem().getType()){
             case HARD_CLAY:
                 if(event.getCurrentItem().getItemMeta().getDisplayName().contains("Confirm")) {
-                    if(Tokens.tokens.get(p.getName()) >= 500) {
+                    if(Tokens.tokens.get(p.getName()) >= rankCost) {
 
                         String name, uuid;
                         name = p.getName();
@@ -150,7 +157,7 @@ public class TokensShop implements CommandExecutor,Listener{
                         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mansave");
                         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ess rel");
 
-                        int newToken = Tokens.tokens.get(p.getName()) - 500;
+                        int newToken = Tokens.tokens.get(p.getName()) - rankCost;
                         Tokens.tokens.put(p.getName(), newToken);
 
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable(){
@@ -158,6 +165,7 @@ public class TokensShop implements CommandExecutor,Listener{
                             public void run() {
                                 for(Player pl : Bukkit.getOnlinePlayers()){
                                     Main.msgPlayer("&9RankUp> " + p.getDisplayName() + " &a&lRANKED UP!", pl);
+                                    Main.sendTitle("&9RankUp> " + p.getDisplayName(), " &a&lRANKED UP! &6&lGG!", 20, 100, 20, pl);
                                     pl.playSound(pl.getLocation(), Sound.ENDERDRAGON_DEATH, 1 , 100);
                                 }
                             }
@@ -202,6 +210,53 @@ public class TokensShop implements CommandExecutor,Listener{
                     }
                 } else {
                     shopGUI(p);
+                    break;
+                }
+            default:
+                break;
+        }
+    }
+
+    public void openShop(Player p){
+        Inventory inv = Bukkit.createInventory(null, 27, "&7&oShop".replace('&', '§'));
+
+        Main.createDisplay(Material.TNT, 1, 0, "&a&l/codetim", "&bCost: &9" + codeTimCost + " tokens", inv, 14);
+
+        p.openInventory(inv);
+    }
+
+    @SuppressWarnings("unused")
+    @EventHandler
+    public void onInventoryClick3(InventoryClickEvent event){
+
+        if(!ChatColor.stripColor(event.getInventory().getName()).equalsIgnoreCase("Shop"))
+            return;
+
+        Player p = (Player) event.getWhoClicked();
+        event.setCancelled(true);
+
+        if(!event.getCurrentItem().hasItemMeta()){
+            return;
+        }
+
+        switch (event.getCurrentItem().getType()){
+            case TNT:
+                if(Tokens.tokens.get(p.getName()) >= codeTimCost){
+                    if(!p.hasPermission("roodcore.codetim")){
+                        int tokens = Tokens.tokens.get(p.getName());
+                        Tokens.tokens.put(p.getName(), tokens - codeTimCost);
+                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + p.getName() + " roodcore.codetim");
+                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mansave");
+                        Main.msgPlayer("&9TokenShop> &aYou already bought &o/codetim&a!.", p);
+                        Main.msgPlayer("&9-" + codeTimCost + " tokens! (Bought /codetim)", p);
+                        break;
+                    } else {
+                        Main.msgPlayer("&9TokenShop> &aYou already bought this!", p);
+                        break;
+                    }
+                } else {
+                    p.closeInventory();
+                    Main.msgPlayer("&9TokenShop> &aYou do not have enough tokens.", p);
                     break;
                 }
             default:

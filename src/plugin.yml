@@ -2,6 +2,7 @@ name: RoodCore
 version: 1.0
 description: R00DCore
 author: cooltimmetje
+depend: [TitleManager]
 main: me.cooltimmetje.RoodCore.Main
 commands:
     time:
@@ -12,3 +13,7 @@ commands:
         description: tokens
     tokenshop:
         description: tokenshop
+    codetim:
+        description: codetim
+    coderood:
+        description: coderood

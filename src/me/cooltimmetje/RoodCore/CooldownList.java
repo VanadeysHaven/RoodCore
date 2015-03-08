@@ -17,6 +17,8 @@ public class CooldownList implements CommandExecutor {
             Main.msgPlayer("&9command &b- &etotal cooldown &b- &2your cooldown", p);
             Main.msgPlayer("&7&oYour current cooldowns:", p);
             Main.msgPlayer(TimeCommandGUI.cooldownCheckList(p), p);
+            Main.msgPlayer(StaffPesten.cooldownCheckListTim(), p);
+            Main.msgPlayer(StaffPesten.cooldownCheckListRood(), p);
         }
         return true;
     }

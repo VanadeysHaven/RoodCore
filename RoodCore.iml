@@ -21,7 +21,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../Servers/Vanilla - Spigot/plugins/EssentialsGroupManager.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../Servers/Vanilla - Spigot/plugins/TitleManager-1.3.8.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

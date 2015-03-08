@@ -1,6 +1,8 @@
 package me.cooltimmetje.RoodCore;
 
 import com.evilmidget38.UUIDFetcher;
+import io.puharesource.mc.titlemanager.api.ActionbarTitleObject;
+import io.puharesource.mc.titlemanager.api.TitleObject;
 import me.cooltimmetje.RoodCore.Tokens.Tokens;
 import me.cooltimmetje.RoodCore.Tokens.TokensShop;
 import net.md_5.bungee.api.ChatColor;
@@ -38,7 +40,7 @@ public class Main extends JavaPlugin{
     public void onEnable(){
         StartLoad();
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ess rel");
-        Bukkit.broadcastMessage("&3&m-----&r &4&lR00DCore &3&m-----".replace('&','§'));
+        Bukkit.broadcastMessage("&3&m-----&r &4&lR00DCore &3&m-----".replace('&', '§'));
         Bukkit.broadcastMessage("&eLoading... &7&oPlease wait...".replace('&','§'));
         this.saveDefaultConfig();
 
@@ -52,16 +54,19 @@ public class Main extends JavaPlugin{
         getCommand("cooldown").setExecutor(new CooldownList());
         getCommand("tokens").setExecutor(new Tokens());
         getCommand("tokenshop").setExecutor(new TokensShop());
-//        getLogger().info("[R00DCore] Adding recipes...");
-//        getServer().addRecipe(...)
+        getCommand("codetim").setExecutor(new StaffPesten());
+        getCommand("coderood").setExecutor(new StaffPesten());
 
-//        getLogger().info("[R00DCore] Hooking into APIs...");
-//        if (getServer().getPluginManager().getPlugin("TitleManager") != null && getServer().getPluginManager().getPlugin("TitleManager").isEnabled())
-//            getLogger().info("[RCR] Successfully hooked into TitleManager!");
-//        else {
-//            getLogger().warning("[RCR] Failed to hook into TitleManager, disabling plugin!");
-//            getPluginLoader().disablePlugin(this);
-//        }
+        getLogger().info("[R00DCore] Adding recipes...");
+        getServer().addRecipe(CustomRecipes.boneMealGrind);
+
+        getLogger().info("[R00DCore] Hooking into APIs...");
+        if (getServer().getPluginManager().getPlugin("TitleManager") != null && getServer().getPluginManager().getPlugin("TitleManager").isEnabled())
+            getLogger().info("[RCR] Successfully hooked into TitleManager!");
+        else {
+            getLogger().warning("[RCR] Failed to hook into TitleManager, disabling plugin!");
+            getPluginLoader().disablePlugin(this);
+        }
 
         Tokens.tokenGiver();
         for(Player p : Bukkit.getOnlinePlayers()){
@@ -213,6 +218,21 @@ public class Main extends JavaPlugin{
         return randomNum;
     }
 
+    public static void sendTitle(String title, String subTitle, int fadeIn, int stay, int fadeOut, Player p){
+        new TitleObject(title.replace('&', '§'), subTitle.replace('&', '§')).setFadeIn(fadeIn).setStay(stay).setFadeOut(fadeOut).send(p);
+    }
+
+    public static void sendMain(String title, int fadeIn, int stay, int fadeOut, Player p){
+        new TitleObject(title.replace('&', '§'), TitleObject.TitleType.TITLE).setFadeIn(fadeIn).setStay(stay).setFadeOut(fadeOut).send(p);
+    }
+
+    public static void sendSub(String title, int fadeIn, int stay, int fadeOut, Player p){
+        new TitleObject(title.replace('&', '§'), TitleObject.TitleType.SUBTITLE).setFadeIn(fadeIn).setStay(stay).setFadeOut(fadeOut).send(p);
+    }
+
+    public static void sendAction(String title, Player p){
+        new ActionbarTitleObject(title.replace('&', '§')).send(p);
+    }
 
     public static void Broadcast(String msg){
         Bukkit.broadcastMessage(msg.replace('&','§'));
