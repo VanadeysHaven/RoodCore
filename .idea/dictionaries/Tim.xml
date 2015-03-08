@@ -2,7 +2,10 @@
   <dictionary name="Tim">
     <words>
       <w>cooldowns</w>
+      <w>getgroup</w>
+      <w>rankup</w>
       <w>recieved</w>
+      <w>tokenshop</w>
     </words>
   </dictionary>
 </component>

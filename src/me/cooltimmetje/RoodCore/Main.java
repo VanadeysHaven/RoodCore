@@ -1,6 +1,9 @@
 package me.cooltimmetje.RoodCore;
 
 import com.evilmidget38.UUIDFetcher;
+import me.cooltimmetje.RoodCore.Tokens.Tokens;
+import me.cooltimmetje.RoodCore.Tokens.TokensShop;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -26,6 +29,7 @@ import java.util.Random;
 
 @SuppressWarnings("unused")
 public class Main extends JavaPlugin{
+
     private static Plugin plugin;
     public long loadStart;
     public long loadStop;
@@ -33,24 +37,21 @@ public class Main extends JavaPlugin{
 
     public void onEnable(){
         StartLoad();
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ess rel");
         Bukkit.broadcastMessage("&3&m-----&r &4&lR00DCore &3&m-----".replace('&','§'));
         Bukkit.broadcastMessage("&eLoading... &7&oPlease wait...".replace('&','§'));
         this.saveDefaultConfig();
 
-        for(Player p : Bukkit.getOnlinePlayers()){
-            loadProfile(p);
-        }
-
         plugin = this;
 
         getLogger().info("[R00DCore] Registering Events...");
-        registerEvents(this, new JoinQuitEvent(), new TimeCommandGUI(), new XPStorage());
+        registerEvents(this, new JoinQuitEvent(), new TimeCommandGUI(), new XPStorage(), new Tokens(), new TokensShop());
 
         getLogger().info("[R00DCore] Registering Commands...");
         getCommand("time").setExecutor(new TimeCommandGUI());
         getCommand("cooldown").setExecutor(new CooldownList());
         getCommand("tokens").setExecutor(new Tokens());
-
+        getCommand("tokenshop").setExecutor(new TokensShop());
 //        getLogger().info("[R00DCore] Adding recipes...");
 //        getServer().addRecipe(...)
 
@@ -63,6 +64,9 @@ public class Main extends JavaPlugin{
 //        }
 
         Tokens.tokenGiver();
+        for(Player p : Bukkit.getOnlinePlayers()){
+            loadProfile(p);
+        }
         StopLoad();
         getLogger().info("[R00DCore] Done! Load time: " + loadFinal + "ms");
         Bukkit.broadcastMessage("&2Loading complete! &aLoad Time: &c".replace('&', '§') + loadFinal + "ms");
@@ -82,10 +86,6 @@ public class Main extends JavaPlugin{
         p.sendMessage(arrowTag + "&b&oLoading your profile from disk... &8(".replace('&', '§') + p.getDisplayName() + "&8)".replace('&', '§'));
         p.playSound(p.getLocation(), Sound.NOTE_PLING, 1 , 100);
 
-        getTokens(p);
-    }
-
-    private static void getTokens(Player p) {
         String name, uuid;
         name = p.getName();
         try {
@@ -108,6 +108,12 @@ public class Main extends JavaPlugin{
             Main.msgPlayer(Main.arrowTag + "&aYou do not have a config file on disk, so we'll generate one for you. :)", p);
             Main.msgPlayer(Main.arrowTag + "&7&oUUID: " + uuid, p);
         }
+
+        getTokens(p, userFile, user);
+        getGroup(p, userFile, user);
+    }
+
+    private static void getTokens(Player p, File userFile, FileConfiguration user) {
 
         if(!user.contains("tokens")){
             user.set("tokens", 0);
@@ -132,6 +138,31 @@ public class Main extends JavaPlugin{
         Tokens.tokens.put(p.getName(), tokens);
         int tokenTime = user.getInt("tokenTime");
         Tokens.tokenTime.put(p.getName(), tokenTime);//
+    }
+
+    public static void getGroup(Player p, File userFile, FileConfiguration user){
+        String displayName = p.getDisplayName();
+
+        int i = displayName.indexOf(' ');
+        String groupName = displayName.substring(0, i);
+
+        groupName = ChatColor.stripColor(groupName.replace('[', ' ').replace(']', ' ').replace("'", " ").replace("+", "Plus").trim());
+
+        if(!user.contains("group")){
+            user.set("group", groupName);
+        } else {
+            String onFile = user.getString("group");
+            if(onFile != groupName){
+                user.set("group", groupName.trim());
+            }
+        }
+
+        try {
+            user.save(userFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.print("file saving failed");
+        }
     }
 
     public void saveProfile(Player p){
@@ -181,6 +212,7 @@ public class Main extends JavaPlugin{
 
         return randomNum;
     }
+
 
     public static void Broadcast(String msg){
         Bukkit.broadcastMessage(msg.replace('&','§'));

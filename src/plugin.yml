@@ -10,3 +10,5 @@ commands:
         description: cooldown
     tokens:
         description: tokens
+    tokenshop:
+        description: tokenshop
