@@ -2,6 +2,7 @@ package me.cooltimmetje.RoodCore.Tokens;
 
 import com.evilmidget38.UUIDFetcher;
 import me.cooltimmetje.RoodCore.Main;
+import me.cooltimmetje.RoodCore.PreferencesMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -79,6 +80,16 @@ public class Tokens implements CommandExecutor,Listener{
                     user.set("tokenTime", time);
                     tokenTime.put(p.getName(), time);
                     Main.getGroup(p, userFile, user);
+                    if(PreferencesMenu.flyOn.contains(p.getName())){
+                        user.set("flight", true);
+                    } else {
+                        user.set("flight", false);
+                    }
+                    if(PreferencesMenu.pvpOn.contains(p.getName())){
+                        user.set("pvp", true);
+                    } else {
+                        user.set("pvp", false);
+                    }
 
                     try {
                         user.save(userFile);

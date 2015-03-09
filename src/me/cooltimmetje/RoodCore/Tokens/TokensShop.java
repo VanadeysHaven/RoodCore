@@ -16,10 +16,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -82,12 +80,14 @@ public class TokensShop implements CommandExecutor,Listener{
             rankNames.put(2, "UserPlus");
             rankNames.put(3, "UserPlusPlus");
             rankNames.put(4, "Noob");
+            rankNames.put(5, "NoobPlus");
         }
         if(rankID.isEmpty()){
             rankID.put("User", 1);
             rankID.put("UserPlus", 2);
             rankID.put("UserPlusPlus", 3);
             rankID.put("Noob", 4);
+            rankID.put("NoobPlus", 5);
         }
         Inventory inv = Bukkit.createInventory(null, 27, "&7&oRankup".replace('&', '§'));
 
@@ -155,7 +155,6 @@ public class TokensShop implements CommandExecutor,Listener{
 
                         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manuadd " + p.getName() + " " + nextGroup);
                         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mansave");
-                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ess rel");
 
                         int newToken = Tokens.tokens.get(p.getName()) - rankCost;
                         Tokens.tokens.put(p.getName(), newToken);
@@ -170,36 +169,6 @@ public class TokensShop implements CommandExecutor,Listener{
                                 }
                             }
                         }, 40);
-
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable(){
-                            @Override
-                            public void run() {
-                                String displayName = p.getDisplayName();
-
-                                int i = displayName.indexOf(' ');
-                                String groupName = displayName.substring(0, i);
-
-                                groupName = net.md_5.bungee.api.ChatColor.stripColor(groupName.replace('[', ' ').replace(']', ' ').replace("'", " ").replace("+", "Plus").trim());
-
-                                if(!user.contains("group")){
-                                    user.set("group", groupName);
-                                } else {
-                                    String onFile = user.getString("group");
-                                    if(!onFile.equals(groupName)){
-                                        user.set("group", groupName.trim());
-                                    }
-                                }
-
-                                try {
-                                    user.save(userFile);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    System.out.print("file saving failed");
-                                }
-                            }
-                        }, 60);
-
-
 
                         p.closeInventory();
                         break;

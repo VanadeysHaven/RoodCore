@@ -47,7 +47,7 @@ public class Main extends JavaPlugin{
         plugin = this;
 
         getLogger().info("[R00DCore] Registering Events...");
-        registerEvents(this, new JoinQuitEvent(), new TimeCommandGUI(), new XPStorage(), new Tokens(), new TokensShop());
+        registerEvents(this, new JoinQuitEvent(), new TimeCommandGUI(), new XPStorage(), new Tokens(), new TokensShop(), new PreferencesMenu(), new FlightManager(), new PvPManager());
 
         getLogger().info("[R00DCore] Registering Commands...");
         getCommand("time").setExecutor(new TimeCommandGUI());
@@ -56,6 +56,8 @@ public class Main extends JavaPlugin{
         getCommand("tokenshop").setExecutor(new TokensShop());
         getCommand("codetim").setExecutor(new StaffPesten());
         getCommand("coderood").setExecutor(new StaffPesten());
+        getCommand("prefs").setExecutor(new PreferencesMenu());
+        getCommand("fly").setExecutor(new PreferencesMenu());
 
         getLogger().info("[R00DCore] Adding recipes...");
         getServer().addRecipe(CustomRecipes.boneMealGrind);
@@ -116,6 +118,7 @@ public class Main extends JavaPlugin{
 
         getTokens(p, userFile, user);
         getGroup(p, userFile, user);
+        getSettings(p, userFile, user);
     }
 
     private static void getTokens(Player p, File userFile, FileConfiguration user) {
@@ -143,6 +146,31 @@ public class Main extends JavaPlugin{
         Tokens.tokens.put(p.getName(), tokens);
         int tokenTime = user.getInt("tokenTime");
         Tokens.tokenTime.put(p.getName(), tokenTime);//
+    }
+
+    private static void getSettings(Player p, File userFile, FileConfiguration user) {
+        if(!user.contains("flight")){
+            user.set("flight", false);
+        } else {
+            if(user.getBoolean("flight")){
+                PreferencesMenu.flyOn.add(p.getName());
+            }
+        }
+
+        if(!user.contains("pvp")){
+            user.set("pvp", false);
+        } else {
+            if(user.getBoolean("pvp")){
+                PreferencesMenu.pvpOn.add(p.getName());
+            }
+        }
+
+        try {
+            user.save(userFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.print("file saving failed");
+        }
     }
 
     public static void getGroup(Player p, File userFile, FileConfiguration user){

@@ -24,9 +24,10 @@ public class StaffPesten implements CommandExecutor {
     String lastUserRood = null;
     static int cooldownRood = 90;
     int tokenRood = 2;
+    int kickChanceRood = 10;
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Player p = (Player) sender;
+        final Player p = (Player) sender;
         if(cmd.getLabel().equalsIgnoreCase("codetim")){
             Player tim = Bukkit.getPlayer("Cooltimmetje");
             if(tim != null) {
@@ -53,7 +54,7 @@ public class StaffPesten implements CommandExecutor {
                 Main.msgPlayer("&9CodeTim> &aCooltimmetje is currently not online!", p);
             }
         } else if (cmd.getLabel().equalsIgnoreCase("coderood")) {
-            Player rood = Bukkit.getPlayer("ThoThoKill");
+            final Player rood = Bukkit.getPlayer("ThoThoKill");
             if(rood != null) {
                 if(allowedThomas(p)) {
                     rood.setFlying(false);
@@ -69,6 +70,22 @@ public class StaffPesten implements CommandExecutor {
                     Main.msgPlayer("&9+" + tokenRood + " tokens! (Shot ThoThoKill into the sky!)", p);
                     int tokenAmount = Tokens.tokens.get(p.getName()) + tokenRood;
                     Tokens.tokens.put(p.getName(), tokenAmount);
+
+                    int random = Main.randomInt(1, 100);
+                    if(random <= 10){
+
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
+                            @Override
+                            public void run() {
+                                rood.kickPlayer("rekt!");
+                                Main.Broadcast("&9CodeRood> &a" + p.getDisplayName() + " &agot a critical shot on " + rood.getDisplayName() + "&a!");
+                                Main.msgPlayer("&9+" + tokenRood + " tokens! (Critical shot on ThoThoKill!)", p);
+                                int tokenAmount = Tokens.tokens.get(p.getName()) + tokenRood;
+                                Tokens.tokens.put(p.getName(), tokenAmount);
+                            }
+                        }, 40);
+
+                    }
                 }
             } else {
                 Main.msgPlayer("&9CodeRood> &aThoThoKill is currently not online!", p);

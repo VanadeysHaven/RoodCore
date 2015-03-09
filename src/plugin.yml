@@ -17,3 +17,7 @@ commands:
         description: codetim
     coderood:
         description: coderood
+    prefs:
+        description: prefs
+    fly:
+        description: fly
