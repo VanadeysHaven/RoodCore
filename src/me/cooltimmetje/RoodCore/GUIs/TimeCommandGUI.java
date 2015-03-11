@@ -1,5 +1,6 @@
-package me.cooltimmetje.RoodCore;
+package me.cooltimmetje.RoodCore.GUIs;
 
+import me.cooltimmetje.RoodCore.Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -59,32 +60,32 @@ public class TimeCommandGUI implements CommandExecutor,Listener {
             timeData = 15;
         }
 
-        Main.createDisplay(Material.STAINED_GLASS_PANE, 1, 5, "&a&lSet time to: &bday", null, time, 1);
-        Main.createDisplay(Material.STAINED_GLASS_PANE, 1, 4, "&a&lSet time to: &bnoon", null, time, 2);
-        Main.createDisplay(Material.STAINED_GLASS_PANE, 1, 1, "&a&lSet time to: &bdusk", null, time, 3);
-        Main.createDisplay(Material.STAINED_GLASS_PANE, 1, 15, "&a&lSet time to: &bmidnight", null, time, 4);
+        Methods.createDisplay(Material.STAINED_GLASS_PANE, 1, 5, "&a&lSet time to: &bday", null, time, 1);
+        Methods.createDisplay(Material.STAINED_GLASS_PANE, 1, 4, "&a&lSet time to: &bnoon", null, time, 2);
+        Methods.createDisplay(Material.STAINED_GLASS_PANE, 1, 1, "&a&lSet time to: &bdusk", null, time, 3);
+        Methods.createDisplay(Material.STAINED_GLASS_PANE, 1, 15, "&a&lSet time to: &bmidnight", null, time, 4);
 
         if (timeData == 5) {
-            Main.createDisplay(Material.STAINED_GLASS_PANE, 1, 5, "&a&lSet time to: &bday", "&c&lCurrent Time", time, 1);
+            Methods.createDisplay(Material.STAINED_GLASS_PANE, 1, 5, "&a&lSet time to: &bday", "&c&lCurrent Time", time, 1);
         } else if (timeData == 4) {
-            Main.createDisplay(Material.STAINED_GLASS_PANE, 1, 4, "&a&lSet time to: &bnoon", "&c&lCurrent Time", time, 2);
+            Methods.createDisplay(Material.STAINED_GLASS_PANE, 1, 4, "&a&lSet time to: &bnoon", "&c&lCurrent Time", time, 2);
         } else if (timeData == 1) {
-            Main.createDisplay(Material.STAINED_GLASS_PANE, 1, 1, "&a&lSet time to: &bdusk", "&c&lCurrent Time", time, 3);
+            Methods.createDisplay(Material.STAINED_GLASS_PANE, 1, 1, "&a&lSet time to: &bdusk", "&c&lCurrent Time", time, 3);
         } else if (timeData == 15) {
-            Main.createDisplay(Material.STAINED_GLASS_PANE, 1, 15, "&a&lSet time to: &bmidnight", "&c&lCurrent Time", time, 4);
+            Methods.createDisplay(Material.STAINED_GLASS_PANE, 1, 15, "&a&lSet time to: &bmidnight", "&c&lCurrent Time", time, 4);
         }
 
-        Main.createDisplay(Material.WATCH, 1, 0, "&a&lCurrent time: &b" + timeName, "&7&o(" + Bukkit.getWorld("Survival").getTime() + ")", time, 10);
+        Methods.createDisplay(Material.WATCH, 1, 0, "&a&lCurrent time: &b" + timeName, "&7&o(" + Bukkit.getWorld("Survival").getTime() + ")", time, 10);
 
-        Main.createDisplay(Material.BUCKET, 1, 0, "&a&lSet weather to: &bclear", null, time, 8);
-        Main.createDisplay(Material.WATER_BUCKET, 1, 0, "&a&lSet weather to: &brain", null, time, 9);
+        Methods.createDisplay(Material.BUCKET, 1, 0, "&a&lSet weather to: &bclear", null, time, 8);
+        Methods.createDisplay(Material.WATER_BUCKET, 1, 0, "&a&lSet weather to: &brain", null, time, 9);
 
         if(Bukkit.getWorld("Survival").isThundering()){
-            Main.createDisplay(Material.WATER_BUCKET, 1, 0, "&a&lCurrent weather: &brain", null, time, 18);
-            Main.createDisplay(Material.WATER_BUCKET, 1, 0, "&a&lSet weather to: &brain", "&c&lCurrent Weather", time, 9);
+            Methods.createDisplay(Material.WATER_BUCKET, 1, 0, "&a&lCurrent weather: &brain", null, time, 18);
+            Methods.createDisplay(Material.WATER_BUCKET, 1, 0, "&a&lSet weather to: &brain", "&c&lCurrent Weather", time, 9);
         } else {
-            Main.createDisplay(Material.BUCKET, 1, 0, "&a&lCurrent weather: &bclear", null, time, 18);
-            Main.createDisplay(Material.BUCKET, 1, 0, "&a&lSet weather to: &bclear", "&c&lCurrent Weather", time, 8);
+            Methods.createDisplay(Material.BUCKET, 1, 0, "&a&lCurrent weather: &bclear", null, time, 18);
+            Methods.createDisplay(Material.BUCKET, 1, 0, "&a&lSet weather to: &bclear", "&c&lCurrent Weather", time, 8);
         }
 
         p.openInventory(time);
@@ -116,13 +117,13 @@ public class TimeCommandGUI implements CommandExecutor,Listener {
             case STAINED_GLASS_PANE:
                 Bukkit.getWorld("Survival").setTime(timeDataMap.get((int) event.getCurrentItem().getDurability()));
                 p.closeInventory();
-                Main.Broadcast("&9Time and Weather> " + p.getDisplayName() + " &achanged the time to &b" + (timeNameMap.get((int)event.getCurrentItem().getDurability())) + "&a.");
+                Methods.Broadcast("&9Time and Weather> " + p.getDisplayName() + " &achanged the time to &b" + (timeNameMap.get((int)event.getCurrentItem().getDurability())) + "&a.");
                 cooldown.put(p.getName(), System.currentTimeMillis());
                 break;
             case WATER_BUCKET:
                 if(event.getSlot() != 18){
                     Bukkit.getWorld("Survival").setStorm(true);
-                    Main.Broadcast("&9Time and Weather> " + p.getDisplayName() + " &achanged the weather to &brain&a.");
+                    Methods.Broadcast("&9Time and Weather> " + p.getDisplayName() + " &achanged the weather to &brain&a.");
                     cooldown.put(p.getName(), System.currentTimeMillis());
                 } else {
                     break;
@@ -132,8 +133,9 @@ public class TimeCommandGUI implements CommandExecutor,Listener {
                 if(event.getSlot() != 18){
                     Bukkit.getWorld("Survival").setThundering(false);
                     Bukkit.getWorld("Survival").setStorm(false);
-                    Main.Broadcast("&9Time and Weather> " + p.getDisplayName() + " &achanged the weather to &bclear&a.");
+                    Methods.Broadcast("&9Time and Weather> " + p.getDisplayName() + " &achanged the weather to &bclear&a.");
                     cooldown.put(p.getName(), System.currentTimeMillis());
+                    p.closeInventory();
                 } else {
                     break;
                 }
@@ -158,7 +160,7 @@ public class TimeCommandGUI implements CommandExecutor,Listener {
                 minutes = minutes + 1;
                 seconds = seconds - 60;
             }
-            Main.msgPlayer("&9Time and Weather> &aThis command is still on cooldown for you. You can use it again in: &c"+ minutes + "m" + seconds + "s", p);
+            Methods.msgPlayer("&9Time and Weather> &aThis command is still on cooldown for you. You can use it again in: &c"+ minutes + "m" + seconds + "s", p);
             return false;
         }
     }

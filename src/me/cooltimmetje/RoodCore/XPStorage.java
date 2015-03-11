@@ -21,10 +21,10 @@ public class XPStorage implements Listener {
                     if(p.getLevel() >= 1){
                         p.getInventory().removeItem(new ItemStack(Material.GLASS_BOTTLE, 1));
                         p.getInventory().addItem(new ItemStack(Material.EXP_BOTTLE, 1));
-                        Main.msgPlayer("&9XP> &aYou putted a level in to the bottle.", p);
+                        Methods.msgPlayer("&9XP> &aYou putted a level in to the bottle.", p);
                         p.setLevel(p.getLevel() - 1);
                     } else {
-                        Main.msgPlayer("&9XP> &a&oYou need at least 1 level to store it.", p);
+                        Methods.msgPlayer("&9XP> &a&oYou need at least 1 level to store it.", p);
                         return;
                     }
                 } else {
@@ -38,7 +38,7 @@ public class XPStorage implements Listener {
                 event.setCancelled(true);
                 p.getInventory().removeItem(new ItemStack(Material.EXP_BOTTLE, 1));
                 p.getInventory().addItem(new ItemStack(Material.GLASS_BOTTLE, 1));
-                Main.msgPlayer("&9XP> &aYou took a level out of the bottle.", p);
+                Methods.msgPlayer("&9XP> &aYou took a level out of the bottle.", p);
                 p.setLevel(p.getLevel() + 1);
             } else {
                 return;

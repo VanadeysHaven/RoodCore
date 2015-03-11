@@ -1,8 +1,7 @@
-package me.cooltimmetje.RoodCore.Tokens;
+package me.cooltimmetje.RoodCoreOld.Tokens;
 
 import com.evilmidget38.UUIDFetcher;
-import me.cooltimmetje.RoodCore.Main;
-import me.cooltimmetje.RoodCore.PreferencesMenu;
+import me.cooltimmetje.RoodCoreOld.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -50,7 +49,7 @@ public class Tokens implements CommandExecutor,Listener{
                     }
 
                     String fileName = uuid + ".yml";
-                    File userFile = new File(Bukkit.getServer().getPluginManager().getPlugin("RoodCore").getDataFolder(), fileName);
+                    File userFile = new File(Bukkit.getServer().getPluginManager().getPlugin("RoodCoreOld").getDataFolder(), fileName);
                     FileConfiguration user = YamlConfiguration.loadConfiguration(userFile);
 
                     int time = tokenTime.get(p.getName());
@@ -76,26 +75,10 @@ public class Tokens implements CommandExecutor,Listener{
 
                         time = tokenInterval;
                     }
-                    user.set("tokens", tokens.get(p.getName()));
-                    user.set("tokenTime", time);
+
                     tokenTime.put(p.getName(), time);
                     Main.getGroup(p, userFile, user);
-                    if(PreferencesMenu.flyOn.contains(p.getName())){
-                        user.set("flight", true);
-                    } else {
-                        user.set("flight", false);
-                    }
-                    if(PreferencesMenu.pvpOn.contains(p.getName())){
-                        user.set("pvp", true);
-                    } else {
-                        user.set("pvp", false);
-                    }
 
-                    try {
-                        user.save(userFile);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         }, 20, 1200);
@@ -146,7 +129,7 @@ public class Tokens implements CommandExecutor,Listener{
         }
 
         String fileName = uuid + ".yml";
-        File userFile = new File(Bukkit.getServer().getPluginManager().getPlugin("RoodCore").getDataFolder(), fileName);
+        File userFile = new File(Bukkit.getServer().getPluginManager().getPlugin("RoodCoreOld").getDataFolder(), fileName);
         FileConfiguration user = YamlConfiguration.loadConfiguration(userFile);
 
         user.set("tokens", tokens.get(p.getName()));

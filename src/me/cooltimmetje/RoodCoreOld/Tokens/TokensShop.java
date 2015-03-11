@@ -1,7 +1,8 @@
-package me.cooltimmetje.RoodCore.Tokens;
+package me.cooltimmetje.RoodCoreOld.Tokens;
 
 import com.evilmidget38.UUIDFetcher;
-import me.cooltimmetje.RoodCore.Main;
+import me.cooltimmetje.RoodCoreOld.JoinSounds.ShopGUI;
+import me.cooltimmetje.RoodCoreOld.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -28,6 +29,7 @@ public class TokensShop implements CommandExecutor,Listener{
 
     public HashMap<Integer, String> rankNames = new HashMap<Integer, String>();
     public HashMap<String, Integer> rankID = new HashMap<String, Integer>();
+    public HashMap<String, String> userRank = new HashMap<String, String>();
 
     int rankCost = 250;
     int codeTimCost = 80;
@@ -35,7 +37,8 @@ public class TokensShop implements CommandExecutor,Listener{
     public void shopGUI(Player p){
         Inventory inv = Bukkit.createInventory(null, 36, "&7&oToken Shop".replace('&', '§'));
 
-        Main.createDisplay(Material.NETHER_STAR, 1, 0, "&a&lRankup", "&7&lClick here to buy a rankup!", inv, 13);
+        Main.createDisplay(Material.NETHER_STAR, 1, 0, "&a&lRankup", "&7&lClick here to buy a rankup!", inv, 14);
+        Main.createDisplay(Material.JUKEBOX, 1, 0, "&a&lJoin Sounds", "&7&oClick here to buy join sounds that will play when you join!", inv, 13);
         Main.createDisplay(Material.CHEST, 1, 0, "&a&lShop", "&7&lClick here to buy a cool stuff!", inv, 15);
 
         Main.createDisplay(Material.GOLD_NUGGET, 1, 0, "&a&lYour tokens: &b" + Tokens.tokens.get(p.getName()), null, inv, 32);
@@ -69,6 +72,10 @@ public class TokensShop implements CommandExecutor,Listener{
                 break;
             case CHEST:
                 openShop(p);
+                break;
+            case JUKEBOX:
+                ShopGUI.openShop(p);
+                break;
             default:
                 break;
         }
@@ -101,7 +108,7 @@ public class TokensShop implements CommandExecutor,Listener{
         }
 
         String fileName = uuid + ".yml";
-        File userFile = new File(Bukkit.getServer().getPluginManager().getPlugin("RoodCore").getDataFolder(), fileName);
+        File userFile = new File(Bukkit.getServer().getPluginManager().getPlugin("RoodCoreOld").getDataFolder(), fileName);
         FileConfiguration user = YamlConfiguration.loadConfiguration(userFile);
 
         Main.createDisplay(Material.HARD_CLAY, 1, 13, "&2&lConfirm", "&7&oThis is going to cost you: &9" + rankCost + " tokens", inv, 12);
@@ -146,7 +153,7 @@ public class TokensShop implements CommandExecutor,Listener{
                         }
 
                         String fileName = uuid + ".yml";
-                        final File userFile = new File(Bukkit.getServer().getPluginManager().getPlugin("RoodCore").getDataFolder(), fileName);
+                        final File userFile = new File(Bukkit.getServer().getPluginManager().getPlugin("RoodCoreOld").getDataFolder(), fileName);
                         final FileConfiguration user = YamlConfiguration.loadConfiguration(userFile);
 
                         String curGroup = user.getString("group");

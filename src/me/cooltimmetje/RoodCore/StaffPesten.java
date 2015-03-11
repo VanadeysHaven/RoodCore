@@ -1,7 +1,7 @@
 package me.cooltimmetje.RoodCore;
 
 import com.darkblade12.particleeffect.ParticleEffect;
-import me.cooltimmetje.RoodCore.Tokens.Tokens;
+import me.cooltimmetje.RoodCore.Tokens.TokensGiver;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -37,21 +37,21 @@ public class StaffPesten implements CommandExecutor {
                             tim.setVelocity(new Vector(0, 3, 0));
                             ParticleEffect.EXPLOSION_HUGE.display(3, 3, 3, 1, 10, tim.getLocation(), 20);
                             Bukkit.getWorld("Survival").playSound(tim.getLocation(), Sound.EXPLODE, 100, 1);
-                            Main.sendTitle("&a&lYou shot " + tim.getDisplayName() + " &a&linto the sky!", "+2 tokens!", 20, 60, 20, p);
-                            Main.sendMain(p.getDisplayName() + "&a&l shot you into the sky!", 20, 60, 20, tim);
+                            Methods.sendTitle("&a&lYou shot " + tim.getDisplayName() + " &a&linto the sky!", "+2 tokens!", 20, 60, 20, p);
+                            Methods.sendMain(p.getDisplayName() + "&a&l shot you into the sky!", 20, 60, 20, tim);
                             lastUseTim = System.currentTimeMillis();
                             lastUserTim = p.getName();
 
-                            Main.Broadcast("&9CodeTim> &a" + p.getDisplayName() + " &ashot " + tim.getDisplayName() + " &ainto the sky!");
-                            Main.msgPlayer("&9+" + tokenTim + " tokens! (Shot Cooltimmetje into the sky!)", p);
-                            int tokenAmount = Tokens.tokens.get(p.getName()) + tokenTim;
-                            Tokens.tokens.put(p.getName(), tokenAmount);
+                            Methods.Broadcast("&9CodeTim> &a" + p.getDisplayName() + " &ashot " + tim.getDisplayName() + " &ainto the sky!");
+                            Methods.msgPlayer("&9+" + tokenTim + " tokens! (Shot Cooltimmetje into the sky!)", p);
+                            int tokenAmount = TokensGiver.tokensAmount.get(p.getName()) + tokenTim;
+                            TokensGiver.tokensAmount.put(p.getName(), tokenAmount);
                         } else {
-                            Main.msgPlayer("&9CodeTim> &aYou need to buy this first! &o/tokenshop", p);
+                            Methods.msgPlayer("&9CodeTim> &aYou need to buy this first! &o/tokenshop", p);
                         }
                     }
             } else {
-                Main.msgPlayer("&9CodeTim> &aCooltimmetje is currently not online!", p);
+                Methods.msgPlayer("&9CodeTim> &aCooltimmetje is currently not online!", p);
             }
         } else if (cmd.getLabel().equalsIgnoreCase("coderood")) {
             final Player rood = Bukkit.getPlayer("ThoThoKill");
@@ -61,34 +61,34 @@ public class StaffPesten implements CommandExecutor {
                     rood.setVelocity(new Vector(0, 3, 0));
                     ParticleEffect.EXPLOSION_HUGE.display(3, 3, 3, 1, 10, rood.getLocation(), 20);
                     Bukkit.getWorld("Survival").playSound(rood.getLocation(), Sound.EXPLODE, 100, 1);
-                    Main.sendTitle("&a&lYou shot " + rood.getDisplayName() + " &a&linto the sky!", "+2 tokens!", 20, 60, 20, p);
-                    Main.sendMain(p.getDisplayName() + "&a&l shot you into the sky!", 20, 60, 20, rood);
+                    Methods.sendTitle("&a&lYou shot " + rood.getDisplayName() + " &a&linto the sky!", "+2 tokens!", 20, 60, 20, p);
+                    Methods.sendMain(p.getDisplayName() + "&a&l shot you into the sky!", 20, 60, 20, rood);
                     lastUseRood = System.currentTimeMillis();
                     lastUserRood = p.getName();
 
-                    Main.Broadcast("&9CodeRood> &a" + p.getDisplayName() + " &ashot " + rood.getDisplayName() + " &ainto the sky!");
-                    Main.msgPlayer("&9+" + tokenRood + " tokens! (Shot ThoThoKill into the sky!)", p);
-                    int tokenAmount = Tokens.tokens.get(p.getName()) + tokenRood;
-                    Tokens.tokens.put(p.getName(), tokenAmount);
+                    Methods.Broadcast("&9CodeRood> &a" + p.getDisplayName() + " &ashot " + rood.getDisplayName() + " &ainto the sky!");
+                    Methods.msgPlayer("&9+" + tokenRood + " tokens! (Shot ThoThoKill into the sky!)", p);
+                    int tokenAmount = TokensGiver.tokensAmount.get(p.getName()) + tokenRood;
+                    TokensGiver.tokensAmount.put(p.getName(), tokenAmount);
 
-                    int random = Main.randomInt(1, 100);
-                    if(random <= 10){
+                    int random = Methods.randomInt(1, 100);
+                    if(random <= kickChanceRood){
 
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                             @Override
                             public void run() {
                                 rood.kickPlayer("rekt!");
-                                Main.Broadcast("&9CodeRood> &a" + p.getDisplayName() + " &agot a critical shot on " + rood.getDisplayName() + "&a!");
-                                Main.msgPlayer("&9+" + tokenRood + " tokens! (Critical shot on ThoThoKill!)", p);
-                                int tokenAmount = Tokens.tokens.get(p.getName()) + tokenRood;
-                                Tokens.tokens.put(p.getName(), tokenAmount);
+                                Methods.Broadcast("&9CodeRood> &a" + p.getDisplayName() + " &agot a critical shot on " + rood.getDisplayName() + "&a!");
+                                Methods.msgPlayer("&9+" + tokenRood + " tokens! (Critical shot on ThoThoKill!)", p);
+                                int tokenAmount = TokensGiver.tokensAmount.get(p.getName()) + tokenRood;
+                                TokensGiver.tokensAmount.put(p.getName(), tokenAmount);
                             }
                         }, 40);
 
                     }
                 }
             } else {
-                Main.msgPlayer("&9CodeRood> &aThoThoKill is currently not online!", p);
+                Methods.msgPlayer("&9CodeRood> &aThoThoKill is currently not online!", p);
             }
         }
         return true;
@@ -106,7 +106,7 @@ public class StaffPesten implements CommandExecutor {
                 minutes = minutes + 1;
                 seconds = seconds - 60;
             }
-            Main.msgPlayer("&9CodeTim> &aThis command is still on cooldown. &c" + lastUserTim + " &aused it already! You can use it again in: &c"+ minutes + "m" + seconds + "s", p);
+            Methods.msgPlayer("&9CodeTim> &aThis command is still on cooldown. &c" + lastUserTim + " &aused it already! You can use it again in: &c" + minutes + "m" + seconds + "s", p);
             return false;
         }
 
@@ -124,7 +124,7 @@ public class StaffPesten implements CommandExecutor {
                 minutes = minutes + 1;
                 seconds = seconds - 60;
             }
-            Main.msgPlayer("&9CodeRood> &aThis command is still on cooldown. &c" + lastUserRood + " &aused it already! You can use it again in: &c"+ minutes + "m" + seconds + "s", p);
+            Methods.msgPlayer("&9CodeRood> &aThis command is still on cooldown. &c" + lastUserRood + " &aused it already! You can use it again in: &c" + minutes + "m" + seconds + "s", p);
             return false;
         }
 

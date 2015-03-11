@@ -1,5 +1,6 @@
-package me.cooltimmetje.RoodCore;
+package me.cooltimmetje.RoodCore.GUIs;
 
+import me.cooltimmetje.RoodCore.Methods;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -61,14 +62,14 @@ public class PreferencesMenu implements CommandExecutor,Listener {
         inv.setItem(pvpDisplay - 1, pvp);
 
         if(flyOn.contains(p.getName())) {
-            Main.createDisplay(Material.INK_SACK, 1, 10, "&bFlight &8» &aON", "&7&oClick to toggle.", inv, flightDisplay + 9);
-            Main.createDisplay(Material.IRON_FENCE, 1, 0, "&bPvP &8» &c&oNOT AVAILABLE", null, inv, pvpDisplay + 9);
+            Methods.createDisplay(Material.INK_SACK, 1, 10, "&bFlight &8» &aON", "&7&oClick to toggle.", inv, flightDisplay + 9);
+            Methods.createDisplay(Material.IRON_FENCE, 1, 0, "&bPvP &8» &c&oNOT AVAILABLE", null, inv, pvpDisplay + 9);
         } else if(pvpOn.contains(p.getName())){
-            Main.createDisplay(Material.INK_SACK, 1, 10, "&bPvP &8» &aON", "&7&oClick to toggle.", inv, pvpDisplay + 9);
-            Main.createDisplay(Material.IRON_FENCE, 1, 0, "&bFlight &8» &c&oNOT AVAILABLE", null, inv, flightDisplay + 9);
+            Methods.createDisplay(Material.INK_SACK, 1, 10, "&bPvP &8» &aON", "&7&oClick to toggle.", inv, pvpDisplay + 9);
+            Methods.createDisplay(Material.IRON_FENCE, 1, 0, "&bFlight &8» &c&oNOT AVAILABLE", null, inv, flightDisplay + 9);
         } else {
-            Main.createDisplay(Material.INK_SACK, 1, 8, "&bFlight &8» &cOFF", "&7&oClick to toggle.", inv, flightDisplay + 9);
-            Main.createDisplay(Material.INK_SACK, 1, 8, "&bPvP &8» &cOFF", "&7&oClick to toggle.", inv, pvpDisplay + 9);
+            Methods.createDisplay(Material.INK_SACK, 1, 8, "&bFlight &8» &cOFF", "&7&oClick to toggle.", inv, flightDisplay + 9);
+            Methods.createDisplay(Material.INK_SACK, 1, 8, "&bPvP &8» &cOFF", "&7&oClick to toggle.", inv, pvpDisplay + 9);
         }
 
         p.openInventory(inv);
@@ -94,28 +95,28 @@ public class PreferencesMenu implements CommandExecutor,Listener {
                 if(event.getSlot() == flightDisplay + 8){
                     if(flyOn.contains(p.getName())){
                         flyOn.remove(p.getName());
-                        Main.createDisplay(Material.INK_SACK, 1, 8, "&bFlight &8» &cOFF", "&7&oClick to toggle.", inv, flightDisplay + 9);
-                        Main.createDisplay(Material.INK_SACK, 1, 8, "&bPvP &8» &cOFF", "&7&oClick to toggle.", inv, pvpDisplay + 9);
+                        Methods.createDisplay(Material.INK_SACK, 1, 8, "&bFlight &8» &cOFF", "&7&oClick to toggle.", inv, flightDisplay + 9);
+                        Methods.createDisplay(Material.INK_SACK, 1, 8, "&bPvP &8» &cOFF", "&7&oClick to toggle.", inv, pvpDisplay + 9);
                         p.setAllowFlight(false);
                         break;
                     } else {
                         flyOn.add(p.getName());
-                        Main.createDisplay(Material.INK_SACK, 1, 10, "&bFlight &8» &aON", "&7&oClick to toggle.", inv, flightDisplay + 9);
-                        Main.createDisplay(Material.IRON_FENCE, 1, 0, "&bPvP &8» &c&oNOT AVAILABLE", null, inv, pvpDisplay + 9);
+                        Methods.createDisplay(Material.INK_SACK, 1, 10, "&bFlight &8» &aON", "&7&oClick to toggle.", inv, flightDisplay + 9);
+                        Methods.createDisplay(Material.IRON_FENCE, 1, 0, "&bPvP &8» &c&oNOT AVAILABLE", null, inv, pvpDisplay + 9);
                         p.setAllowFlight(true);
                         break;
                     }
                 } else if(event.getSlot() == pvpDisplay + 8){
                     if(pvpOn.contains(p.getName())){
                         pvpOn.remove(p.getName());
-                        Main.createDisplay(Material.INK_SACK, 1, 8, "&bFlight &8» &cOFF", "&7&oClick to toggle.", inv, flightDisplay + 9);
-                        Main.createDisplay(Material.INK_SACK, 1, 8, "&bPvP &8» &cOFF", "&7&oClick to toggle.", inv, pvpDisplay + 9);
+                        Methods.createDisplay(Material.INK_SACK, 1, 8, "&bFlight &8» &cOFF", "&7&oClick to toggle.", inv, flightDisplay + 9);
+                        Methods.createDisplay(Material.INK_SACK, 1, 8, "&bPvP &8» &cOFF", "&7&oClick to toggle.", inv, pvpDisplay + 9);
                         break;
                     } else {
                         pvpOn.add(p.getName());
-                        p.setAllowFlight(true);
-                        Main.createDisplay(Material.INK_SACK, 1, 10, "&bPvP &8» &aON", "&7&oClick to toggle.", inv, pvpDisplay + 9);
-                        Main.createDisplay(Material.IRON_FENCE, 1, 0, "&bFlight &8» &c&oNOT AVAILABLE", null, inv, flightDisplay + 9);
+                        p.setAllowFlight(false);
+                        Methods.createDisplay(Material.INK_SACK, 1, 10, "&bPvP &8» &aON", "&7&oClick to toggle.", inv, pvpDisplay + 9);
+                        Methods.createDisplay(Material.IRON_FENCE, 1, 0, "&bFlight &8» &c&oNOT AVAILABLE", null, inv, flightDisplay + 9);
                         break;
                     }
                 }
