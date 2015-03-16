@@ -10,9 +10,10 @@ import org.bukkit.inventory.ShapedRecipe;
 public class CustomRecipes {
 
     public static ShapedRecipe boneMealGrind =
-            new ShapedRecipe( new ItemStack(Material.INK_SACK, 24, (byte) 15))
-                    .shape(new String[] { " % ","%*%"," % "})
+            new ShapedRecipe(new ItemStack(Material.INK_SACK, 24, (byte) 15))
+                    .shape(new String[]{" % ", "%*%", " % "})
                     .setIngredient('%', Material.BONE)
                     .setIngredient('*', Material.FLINT);
+
 
 }

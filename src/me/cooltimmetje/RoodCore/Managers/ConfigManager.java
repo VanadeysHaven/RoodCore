@@ -3,6 +3,7 @@ package me.cooltimmetje.RoodCore.Managers;
 import me.cooltimmetje.RoodCore.GUIs.PreferencesMenu;
 import me.cooltimmetje.RoodCore.Main;
 import me.cooltimmetje.RoodCore.Methods;
+import me.cooltimmetje.RoodCore.ScoreboardToggle;
 import me.cooltimmetje.RoodCore.Tokens.TokensGiver;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -62,6 +63,21 @@ public class ConfigManager {
             }
         }
 
+        if(!user.contains("myrood")){
+            user.set("myrood", true);
+        } else {
+            if(!user.getBoolean("myrood")){
+                ScoreboardToggle.myRoodOff.add(p.getName());
+            }
+        }
+
+        if(!user.contains("pack")){
+            user.set("pack", 0);
+            ResourcePackManager.playerPack.put(p.getName(), 0);
+        } else {
+            ResourcePackManager.playerPack.put(p.getName(), user.getInt("pack"));
+        }
+
         try {
             user.save(userFile);
         } catch (IOException e) {
@@ -82,6 +98,10 @@ public class ConfigManager {
 
         user.set("flight", PreferencesMenu.flyOn.contains(p.getName()));
         user.set("pvp", PreferencesMenu.pvpOn.contains(p.getName()));
+
+        user.set("myrood", !ScoreboardToggle.myRoodOff.contains(p.getName()));
+
+        user.set("pack", ResourcePackManager.playerPack.get(p.getName()));
 
         try {
             user.save(userFile);

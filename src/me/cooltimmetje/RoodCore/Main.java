@@ -5,8 +5,11 @@ import me.cooltimmetje.RoodCore.GUIs.TimeCommandGUI;
 import me.cooltimmetje.RoodCore.Managers.ConfigManager;
 import me.cooltimmetje.RoodCore.Managers.FlightManager;
 import me.cooltimmetje.RoodCore.Managers.PvPManager;
+import me.cooltimmetje.RoodCore.Managers.ResourcePackManager;
 import me.cooltimmetje.RoodCore.Tokens.TokensCommand;
 import me.cooltimmetje.RoodCore.Tokens.TokensGiver;
+import me.cooltimmetje.RoodCore.Tokens.TokensShop.MainMenu;
+import me.cooltimmetje.RoodCore.Tokens.TokensShop.Rankup;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -35,7 +38,8 @@ public class Main extends JavaPlugin{
         plugin = this;
 
         getLogger().info("[R00DCore] Registering Events...");
-        registerEvents(this, new PreferencesMenu(), new FlightManager(), new TimeCommandGUI(), new XPStorage(), new JoinQuitEvent(), new PvPManager());
+        registerEvents(this, new PreferencesMenu(), new FlightManager(), new TimeCommandGUI(), new XPStorage(), new JoinQuitEvent(), new PvPManager(), new MainMenu(), new Rankup(),
+                new DeathEvent(), new TokensGiver(), new JukeboxFirework());
 
         getLogger().info("[R00DCore] Registering Commands...");
         getCommand("prefs").setExecutor(new PreferencesMenu());
@@ -44,7 +48,12 @@ public class Main extends JavaPlugin{
         getCommand("codetim").setExecutor(new StaffPesten());
         getCommand("coderood").setExecutor(new StaffPesten());
         getCommand("tokens").setExecutor(new TokensCommand());
+        getCommand("tokenshop").setExecutor(new MainMenu());
+        getCommand("rankup").setExecutor(new Rankup());
         getCommand("swaggergear").setExecutor(new SwaggerGear());
+        getCommand("myrood").setExecutor(new ScoreboardToggle());
+        getCommand("rp").setExecutor(new ResourcePackManager());
+        getCommand("rpinfo").setExecutor(new ResourcePackManager());
 
         getLogger().info("[R00DCore] Adding recipes...");
         getServer().addRecipe(CustomRecipes.boneMealGrind);
@@ -57,8 +66,15 @@ public class Main extends JavaPlugin{
             getPluginLoader().disablePlugin(this);
         }
 
-        for(Player p : Bukkit.getOnlinePlayers()){
+        for(final Player p : Bukkit.getOnlinePlayers()){
             ConfigManager.loadData(p);
+            Methods.loadScoreboard(p);
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+                @Override
+                public void run() {
+                    Methods.updateScoreboard(p);
+                }
+            },60);
         }
 
         TokensGiver.tokenTimerGiver();
@@ -70,8 +86,10 @@ public class Main extends JavaPlugin{
 
     public void onDisable(){
         plugin = null;//To stop memory leeks
+        for(Player p : Bukkit.getOnlinePlayers()){
+            Methods.removeScoreboard(p);
+        }
         getServer().resetRecipes();
-
     }
 
     public void StartLoad(){
