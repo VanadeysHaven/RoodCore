@@ -20,6 +20,7 @@ public class CooldownList implements CommandExecutor {
             Methods.msgPlayer(TimeCommandGUI.cooldownCheckList(p), p);
             Methods.msgPlayer(StaffPesten.cooldownCheckListTim(), p);
             Methods.msgPlayer(StaffPesten.cooldownCheckListRood(), p);
+            Methods.msgPlayer(FireworkRide.cooldownCheckList(p), p);
         }
         return true;
     }

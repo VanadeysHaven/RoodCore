@@ -1,8 +1,9 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="RoodCore:jar">
-    <output-path>$PROJECT_DIR$/../../Servers/Vanilla - Spigot/plugins</output-path>
+    <output-path>$PROJECT_DIR$/../../Minecraft/Servers/Vanilla - Spigot/plugins</output-path>
     <root id="archive" name="RoodCore.jar">
       <element id="module-output" name="RoodCore" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../Minecraft/Servers/Vanilla - Spigot/plugins/fanciful-0.3.3-SNAPSHOT.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

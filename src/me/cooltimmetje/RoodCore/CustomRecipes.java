@@ -3,6 +3,7 @@ package me.cooltimmetje.RoodCore;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 
 /**
  * This class has been created on 8-3-2015 at 17:21 by cooltimmetje.
@@ -15,5 +16,6 @@ public class CustomRecipes {
                     .setIngredient('%', Material.BONE)
                     .setIngredient('*', Material.FLINT);
 
-
+    public static ShapelessRecipe sandstoneToSand = new ShapelessRecipe(new ItemStack(Material.SAND, 4, (byte) 0))
+            .addIngredient(Material.SANDSTONE);
 }

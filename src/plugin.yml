@@ -29,3 +29,15 @@ commands:
         description: rp
     rpinfo:
         description: rpinfo
+    rename:
+        description: rename
+    chat:
+        description: chat
+    chatspam:
+        description: chatspam
+    test:
+        description: test
+    fwr:
+        description: fwr
+    tpanew:
+        description: tpanew

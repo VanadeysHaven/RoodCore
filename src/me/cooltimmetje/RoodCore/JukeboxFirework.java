@@ -3,6 +3,7 @@ package me.cooltimmetje.RoodCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
+import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -12,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.FireworkEffect.Type;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,9 +25,9 @@ public class JukeboxFirework implements Listener {
     public ArrayList<Material> discs = new ArrayList<Material>();
 
     @EventHandler
-    public void onRightClick(final PlayerInteractEvent event){
+    public void onRightClick(final PlayerInteractEvent event) {
         final Player p = event.getPlayer();
-        if(discs.isEmpty()){
+        if (discs.isEmpty()) {
             discs.add(Material.RECORD_3);
             discs.add(Material.RECORD_4);
             discs.add(Material.RECORD_5);
@@ -41,54 +41,52 @@ public class JukeboxFirework implements Listener {
             discs.add(Material.GOLD_RECORD);
             discs.add(Material.GREEN_RECORD);
         }
-        if(event.getClickedBlock().getType() == Material.JUKEBOX){
-            if(event.getAction() == Action.RIGHT_CLICK_BLOCK){
-                if(discs.contains(p.getItemInHand().getType())){
-                    for(int i=0; i<3; i++){
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (event.getClickedBlock().getType() == Material.JUKEBOX || event.getClickedBlock().getType() == Material.BEDROCK) {
+                if (discs.contains(p.getItemInHand().getType())) {
+                    for (int i = 0; i < 3; i++) {
+                        //Spawn the Firework, get the FireworkMeta.
+                        final Firework fw = (Firework) p.getWorld().spawnEntity(event.getClickedBlock().getLocation().add(0.5, 1, 0.5), EntityType.FIREWORK);
+                        FireworkMeta fwm = fw.getFireworkMeta();
+
+                        //Our random generator
+                        Random r = new Random();
+
+                        //Get the type
+                        int rt = r.nextInt(2) + 1;
+                        Type type = Type.BALL;
+                        if (rt == 1) type = Type.BALL;
+                        if (rt == 2) type = Type.BURST;
+                        if (rt == 3) type = Type.STAR;
+
+                        //Get our random colours
+                        int r1i = r.nextInt(17) + 1;
+                        int r2i = r.nextInt(17) + 1;
+                        Color c1 = getColor(r1i);
+                        Color c2 = getColor(r2i);
+
+                        //Create our effect with this
+                        FireworkEffect effect = FireworkEffect.builder().flicker(false).withColor(c1).withFade(c2).with(type).trail(true).build();
+
+                        //Then apply the effect to the meta
+                        fwm.addEffect(effect);
+
+                        //Generate some random power and set it
+                        int rp = r.nextInt(2) + 1;
+                        fwm.setPower(rp);
+
+                        //Then apply this to our rocket
+                        fw.setFireworkMeta(fwm);
+
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
                             @Override
                             public void run() {
-                                //Spawn the Firework, get the FireworkMeta.
-                                Firework fw = (Firework) p.getWorld().spawnEntity(event.getClickedBlock().getLocation(), EntityType.FIREWORK);
-                                FireworkMeta fwm = fw.getFireworkMeta();
-
-                                //Our random generator
-                                Random r = new Random();
-
-                                //Get the type
-                                int rt = r.nextInt(4) + 1;
-                                Type type = Type.BALL;
-                                if (rt == 1) type = Type.BALL;
-                                if (rt == 2) type = Type.BALL_LARGE;
-                                if (rt == 3) type = Type.BURST;
-                                if (rt == 4) type = Type.CREEPER;
-                                if (rt == 5) type = Type.STAR;
-
-                                //Get our random colours
-                                int r1i = r.nextInt(17) + 1;
-                                int r2i = r.nextInt(17) + 1;
-                                Color c1 = getColor(r1i);
-                                Color c2 = getColor(r2i);
-
-                                //Create our effect with this
-                                FireworkEffect effect = FireworkEffect.builder().flicker(r.nextBoolean()).withColor(c1).withFade(c2).with(type).trail(r.nextBoolean()).build();
-
-                                //Then apply the effect to the meta
-                                fwm.addEffect(effect);
-
-                                //Generate some random power and set it
-                                int rp = r.nextInt(2) + 1;
-                                fwm.setPower(rp);
-
-                                //Then apply this to our rocket
-                                fw.setFireworkMeta(fwm);
+                                fw.detonate();
                             }
-                        },10);
+                        },2);
                     }
                 }
             }
-
-
 
         }
     }

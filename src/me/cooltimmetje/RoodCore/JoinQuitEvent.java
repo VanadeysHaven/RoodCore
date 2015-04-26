@@ -1,6 +1,5 @@
 package me.cooltimmetje.RoodCore;
 
-import com.avaje.ebean.enhance.asm.commons.Method;
 import me.cooltimmetje.RoodCore.Managers.ConfigManager;
 import me.cooltimmetje.RoodCore.Managers.ResourcePackManager;
 import me.cooltimmetje.RoodCore.Tokens.TokensGiver;
@@ -30,13 +29,23 @@ public class JoinQuitEvent implements Listener {
 
                 Methods.updateTab(p, TokensGiver.tokensAmount.get(p.getName()));
                 Methods.loadScoreboard(p);
+                ResourcePackManager.loadResource(p);
+
+                if(p.hasPermission("roodcore.joinfirework.1")){
+                    Methods.shootFirework(p);
+                }
+                if(p.hasPermission("roodcore.joinfirework.2")){
+                    Methods.shootFirework(p);
+                }
+
+
                 for (Player pl : Bukkit.getOnlinePlayers()) {
                     Methods.sendAction("&9Join> " + p.getDisplayName(), pl);
                     Methods.updateScoreboard(pl);
-                    ResourcePackManager.loadResource(p);
                 }
             }
         }, 20);
+
 
     }
 

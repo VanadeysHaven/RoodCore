@@ -101,7 +101,6 @@ public class StaffPesten implements CommandExecutor {
     }
 
     public boolean allowedTim(Player p){
-
         int cdmillis = cooldownTim * 1000;
         if(System.currentTimeMillis() - lastUseTim >= cdmillis){
             return true;
@@ -115,7 +114,6 @@ public class StaffPesten implements CommandExecutor {
             Methods.msgPlayer("&9CodeTim> &aThis command is still on cooldown. &c" + lastUserTim + " &aused it already! You can use it again in: &c" + minutes + "m" + seconds + "s", p);
             return false;
         }
-
     }
     
     public boolean allowedThomas(Player p){

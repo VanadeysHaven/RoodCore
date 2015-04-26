@@ -30,16 +30,16 @@ public class Main extends JavaPlugin{
 
     public void onEnable(){
         StartLoad();
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ess rel");
         Bukkit.broadcastMessage("&3&m-----&r &4&lR00DCore &3&m-----".replace('&', '§'));
-        Bukkit.broadcastMessage("&eLoading... &7&oPlease wait...".replace('&','§'));
+        Bukkit.broadcastMessage("&eLoading... &7&oPlease wait...".replace('&', '§'));
         this.saveDefaultConfig();
+        Rankup.listRanks();
 
         plugin = this;
 
         getLogger().info("[R00DCore] Registering Events...");
         registerEvents(this, new PreferencesMenu(), new FlightManager(), new TimeCommandGUI(), new XPStorage(), new JoinQuitEvent(), new PvPManager(), new MainMenu(), new Rankup(),
-                new DeathEvent(), new TokensGiver(), new JukeboxFirework());
+                new DeathEvent(), new TokensGiver(), new JukeboxFirework(), new ChatLowerCaseRood(), new AchievementFirework(), new FireworkRide());
 
         getLogger().info("[R00DCore] Registering Commands...");
         getCommand("prefs").setExecutor(new PreferencesMenu());
@@ -54,15 +54,21 @@ public class Main extends JavaPlugin{
         getCommand("myrood").setExecutor(new ScoreboardToggle());
         getCommand("rp").setExecutor(new ResourcePackManager());
         getCommand("rpinfo").setExecutor(new ResourcePackManager());
+        getCommand("rename").setExecutor(new RenameItemCommand());
+        getCommand("chat").setExecutor(new ChatCommand());
+        getCommand("chatspam").setExecutor(new ChatCommand());
+        getCommand("test").setExecutor(new TestCommand());
+        getCommand("fwr").setExecutor(new FireworkRide());
 
         getLogger().info("[R00DCore] Adding recipes...");
         getServer().addRecipe(CustomRecipes.boneMealGrind);
+        getServer().addRecipe(CustomRecipes.sandstoneToSand);
 
         getLogger().info("[R00DCore] Hooking into APIs...");
         if (getServer().getPluginManager().getPlugin("TitleManager") != null && getServer().getPluginManager().getPlugin("TitleManager").isEnabled())
-            getLogger().info("[RCR] Successfully hooked into TitleManager!");
+            getLogger().info("[R00DCore] Successfully hooked into TitleManager!");
         else {
-            getLogger().warning("[RCR] Failed to hook into TitleManager, disabling plugin!");
+            getLogger().warning("[R00DCore] Failed to hook into TitleManager, disabling plugin!");
             getPluginLoader().disablePlugin(this);
         }
 
@@ -74,7 +80,7 @@ public class Main extends JavaPlugin{
                 public void run() {
                     Methods.updateScoreboard(p);
                 }
-            },60);
+            },100);
         }
 
         TokensGiver.tokenTimerGiver();
@@ -87,7 +93,7 @@ public class Main extends JavaPlugin{
     public void onDisable(){
         plugin = null;//To stop memory leeks
         for(Player p : Bukkit.getOnlinePlayers()){
-            Methods.removeScoreboard(p);
+            Methods.reloadScoreboard(p);
         }
         getServer().resetRecipes();
     }

@@ -10,18 +10,27 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../Servers/Spigot Install/Spigot/Spigot-Server/target/spigot-1.8-R0.1-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../Minecraft/Servers/Vanilla - Spigot/spigot-1.8-R0.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../Servers/Spigot Install/Spigot/Spigot-Server/target/spigot-1.8-R0.1-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../Minecraft/Servers/Vanilla - Spigot/spigot-1.8-R0.1-SNAPSHOT.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../Servers/Vanilla - Spigot/plugins/TitleManager.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../Minecraft/Servers/Vanilla - Spigot/plugins/TitleManager.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Minecraft/Servers/Vanilla - Spigot/plugins/fanciful-0.3.3-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

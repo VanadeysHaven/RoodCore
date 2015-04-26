@@ -1,13 +1,10 @@
 package me.cooltimmetje.RoodCore.Managers;
 
-import me.cooltimmetje.RoodCore.Main;
 import me.cooltimmetje.RoodCore.Methods;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.HashMap;
 
@@ -64,13 +61,13 @@ public class ResourcePackManager implements CommandExecutor {
                     Methods.msgPlayer("&eOriginal Song &b- &9RP Song", p);
                     Methods.msgPlayer("&e13 &b- &9Deorro - Five Hours", p);
                     Methods.msgPlayer("&eCat &b- &9Rick Astley - Never Gonna Give You Up", p);
-                    Methods.msgPlayer("&eBlocks &b- &7&oHeleentje van Cappelle - En Dan Gaan We Naar De Speeltuin", p);
+                    Methods.msgPlayer("&eBlocks &b- &9Heleentje van Cappelle - En Dan Gaan We Naar De Speeltuin", p);
                     Methods.msgPlayer("&eChrip &b- &9Andrew Gold - Spooky Scary Skeletons (Remix)", p);
                     Methods.msgPlayer("&eFar &b- &9Andrew Gold - Spooky Scary Skeletons", p);
                     Methods.msgPlayer("&eMall &b- &9SKRILLEX - Bangarang (ft. Sirah)", p);
                     Methods.msgPlayer("&eMellohi &b- &9Pegboard Nerds - Hero (ft. Elizaveta)[Stonebank Remix]", p);
-                    Methods.msgPlayer("&eStal &b- &7&o(original song)", p);
-                    Methods.msgPlayer("&eStrad &b- &7&o(original song)", p);
+                    Methods.msgPlayer("&eStal &b- &9Hellberg - The Girl (feat. Cozi Zuehlsdorff)", p);
+                    Methods.msgPlayer("&eStrad &b- &9Muzzy - Get Crazy", p);
                     Methods.msgPlayer("&eWard &b- &7&o(original song)", p);
                     Methods.msgPlayer("&e11 &b- &7&o(original song)", p);
                     Methods.msgPlayer("&eWait &b- &7&o(original song)", p);
