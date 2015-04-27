@@ -45,6 +45,7 @@ public class XPStorage implements Listener {
                 Methods.sendAction("&9XP> &aYou took a level out of the bottle.", p);
                 p.setLevel(p.getLevel() + 1);
             } else {
+                event.setCancelled(true);
                 return;
             }
 

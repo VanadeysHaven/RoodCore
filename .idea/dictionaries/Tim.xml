@@ -3,6 +3,8 @@
     <words>
       <w>&amp;aor</w>
       <w>&amp;ato</w>
+      <w>&amp;eit</w>
+      <w>&amp;eor</w>
       <w>aaaaand</w>
       <w>astley</w>
       <w>avicii</w>
@@ -37,6 +39,7 @@
       <w>mand</w>
       <w>mansave</w>
       <w>manuaddp</w>
+      <w>masstokens</w>
       <w>minecraft</w>
       <w>mobeggs</w>
       <w>myrood</w>
@@ -45,6 +48,7 @@
       <w>pesten</w>
       <w>pickaxe</w>
       <w>pixl</w>
+      <w>playermount</w>
       <w>procent</w>
       <w>rankup</w>
       <w>recieved</w>
@@ -60,10 +64,15 @@
       <w>speeltuin</w>
       <w>stonebank</w>
       <w>swaggergear</w>
+      <w>teleport</w>
       <w>tellraw</w>
       <w>tichelaar</w>
       <w>tokenshop</w>
+      <w>tp'ed</w>
+      <w>tp'ing</w>
+      <w>tpaccept</w>
       <w>tpanew</w>
+      <w>tpdeny</w>
       <w>welp</w>
       <w>zuehlsdorff</w>
     </words>

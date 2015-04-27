@@ -45,10 +45,10 @@ public class DeathEvent implements Listener{
         Player p = event.getEntity();
         int msg = Methods.randomInt(1, sayings);
         for(Player pl : Bukkit.getOnlinePlayers()) {
-            if(pl == p) {
+            if (pl == p) {
                 Methods.msgPlayer("&c&lYOU DIED! &b&o" + deathSayings.get(msg), pl);
             } else {
-                Methods.msgPlayer("&c&l" + p.getName() + " DIED! &b&o"+ deathSayings.get(msg), pl);
+                Methods.msgPlayer("&c&l" + p.getName() + " DIED! &b&o" + deathSayings.get(msg), pl);
             }
         }
     }

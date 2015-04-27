@@ -39,5 +39,13 @@ commands:
         description: test
     fwr:
         description: fwr
-    tpanew:
-        description: tpanew
+    tpa:
+        description: tpa
+    tpdeny:
+        description: tpdeny
+    tpaccept:
+        description: tpaccept
+    masstokens:
+        description: masstokens
+    givetokens:
+        description: givetokens

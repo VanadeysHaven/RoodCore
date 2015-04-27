@@ -14,6 +14,7 @@ public class ChatLowerCaseRood implements Listener{
         if(event.getPlayer().getName().equals("ThoThoKill")) {
             event.setMessage(event.getMessage().toLowerCase().replace("xd", "xD"));
         }
+        event.setMessage(event.getMessage().replace("<3", "\u2665"));
     }
 
 }

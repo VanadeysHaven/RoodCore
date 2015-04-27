@@ -12,8 +12,12 @@ public class TpaCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
-        if (cmd.getName().equalsIgnoreCase("tpanew")){
-
+        if (cmd.getName().equalsIgnoreCase("tpa")){
+            if(args.length == 0) {
+                TpaGUI.openTpaGui(p);
+            } else if(args.length >= 1){
+                TpaSendRequest.sendTpa(p, args[0]);
+            }
         }
         return true;
     }

@@ -6,6 +6,12 @@ import me.cooltimmetje.RoodCore.Managers.ConfigManager;
 import me.cooltimmetje.RoodCore.Managers.FlightManager;
 import me.cooltimmetje.RoodCore.Managers.PvPManager;
 import me.cooltimmetje.RoodCore.Managers.ResourcePackManager;
+import me.cooltimmetje.RoodCore.Teleport.Request.TpaAcceptCommand;
+import me.cooltimmetje.RoodCore.Teleport.Request.TpaCommand;
+import me.cooltimmetje.RoodCore.Teleport.Request.TpaDenyCommand;
+import me.cooltimmetje.RoodCore.Teleport.Request.TpaGUI;
+import me.cooltimmetje.RoodCore.Tokens.GiveTokensCommand;
+import me.cooltimmetje.RoodCore.Tokens.MassTokensCommand;
 import me.cooltimmetje.RoodCore.Tokens.TokensCommand;
 import me.cooltimmetje.RoodCore.Tokens.TokensGiver;
 import me.cooltimmetje.RoodCore.Tokens.TokensShop.MainMenu;
@@ -39,7 +45,7 @@ public class Main extends JavaPlugin{
 
         getLogger().info("[R00DCore] Registering Events...");
         registerEvents(this, new PreferencesMenu(), new FlightManager(), new TimeCommandGUI(), new XPStorage(), new JoinQuitEvent(), new PvPManager(), new MainMenu(), new Rankup(),
-                new DeathEvent(), new TokensGiver(), new JukeboxFirework(), new ChatLowerCaseRood(), new AchievementFirework(), new FireworkRide());
+                new DeathEvent(), new TokensGiver(), new JukeboxFirework(), new ChatLowerCaseRood(), new AchievementFirework(), new FireworkRide(), new TpaGUI(), new PlayerMount());
 
         getLogger().info("[R00DCore] Registering Commands...");
         getCommand("prefs").setExecutor(new PreferencesMenu());
@@ -59,6 +65,11 @@ public class Main extends JavaPlugin{
         getCommand("chatspam").setExecutor(new ChatCommand());
         getCommand("test").setExecutor(new TestCommand());
         getCommand("fwr").setExecutor(new FireworkRide());
+        getCommand("tpa").setExecutor(new TpaCommand());
+        getCommand("tpdeny").setExecutor(new TpaDenyCommand());
+        getCommand("tpaccept").setExecutor(new TpaAcceptCommand());
+        getCommand("masstokens").setExecutor(new MassTokensCommand());
+        getCommand("givetokens").setExecutor(new GiveTokensCommand());
 
         getLogger().info("[R00DCore] Adding recipes...");
         getServer().addRecipe(CustomRecipes.boneMealGrind);

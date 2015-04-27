@@ -41,8 +41,8 @@ public class Rankup implements Listener,CommandExecutor {
         return true;
     }
 
-    public static void listRanks(){
-        if(nameID.isEmpty()){
+    public static void listRanks() {
+        if (nameID.isEmpty()) {
             nameID.put("User", 1);
             nameID.put("UserPlus", 2);
             nameID.put("UserPlusPlus", 3);
@@ -51,31 +51,37 @@ public class Rankup implements Listener,CommandExecutor {
             nameID.put("NoobPlusPlus", 6);
             nameID.put("Bruh", 7);
             nameID.put("BruhPlus", 8);
-            nameID.put("BruhPlusPlus",9);
-            nameID.put("Miner",10);
-            nameID.put("MinerPlus",11);
-            nameID.put("MinerPlusPlus",12);
-            nameID.put("Mand",13);
-            nameID.put("MandPlus",14);
-            nameID.put("MandPlusPlus",15);
-            nameID.put("Tichelaar",16);
-            nameID.put("TichelaarPlus",17);
-            nameID.put("TichelaarPlusPlus",18);
-            nameID.put("Makkum",19);
-            nameID.put("MakkumPlus",20);
-            nameID.put("MakkumPlusPlus",21);
-            nameID.put("Vip",22);
-            nameID.put("VipPlus",23);
-            nameID.put("VipPlusPlus",24);
-            nameID.put("Mvp",25);
-            nameID.put("MvpPlus",26);
-            nameID.put("MvpPlusPlus",27);
-            nameID.put("Ultra",28);
-            nameID.put("UltraPlus",29);
-            nameID.put("UltraPlusPlus",30);
+            nameID.put("BruhPlusPlus", 9);
+            nameID.put("Miner", 10);
+            nameID.put("MinerPlus", 11);
+            nameID.put("MinerPlusPlus", 12);
+            nameID.put("Mand", 13);
+            nameID.put("MandPlus", 14);
+            nameID.put("MandPlusPlus", 15);
+            nameID.put("Tichelaar", 16);
+            nameID.put("TichelaarPlus", 17);
+            nameID.put("TichelaarPlusPlus", 18);
+            nameID.put("Makkum", 19);
+            nameID.put("MakkumPlus", 20);
+            nameID.put("MakkumPlusPlus", 21);
+            nameID.put("Vip", 22);
+            nameID.put("VipPlus", 23);
+            nameID.put("VipPlusPlus", 24);
+            nameID.put("Mvp", 25);
+            nameID.put("MvpPlus", 26);
+            nameID.put("MvpPlusPlus", 27);
+            nameID.put("Ultra", 28);
+            nameID.put("UltraPlus", 29);
+            nameID.put("UltraPlusPlus", 30);
+            nameID.put("Hero", 31);
+            nameID.put("HeroPlus", 32);
+            nameID.put("HeroPlusPlus", 33);
+            nameID.put("Legend", 34);
+            nameID.put("LegendPlus", 35);
+            nameID.put("LegendPlusPlus", 36);
 
         }
-        if(idName.isEmpty()){
+        if (idName.isEmpty()) {
             idName.put(1, "User");
             idName.put(2, "UserPlus");
             idName.put(3, "UserPlusPlus");
@@ -106,8 +112,14 @@ public class Rankup implements Listener,CommandExecutor {
             idName.put(28, "Ultra");
             idName.put(29, "UltraPlus");
             idName.put(30, "UltraPlusPlus");
+            idName.put(31, "Hero");
+            idName.put(32, "HeroPlus");
+            idName.put(33, "HeroPlusPlus");
+            idName.put(34, "Legend");
+            idName.put(35, "LegendPlus");
+            idName.put(36, "LegendPlusPlus");
         }
-        if(idColor.isEmpty()){
+        if (idColor.isEmpty()) {
             idColor.put(1, "&8[&7User&8]");
             idColor.put(2, "&8[&7User&6+&8]");
             idColor.put(3, "&8[&7User&6+&c+&8]");
@@ -138,8 +150,14 @@ public class Rankup implements Listener,CommandExecutor {
             idColor.put(28, "&8[&aUltra&8]");
             idColor.put(29, "&8[&aUltra&6+&8]");
             idColor.put(30, "&8[&aUltra&6+&c+&8]");
+            idColor.put(31, "&8[&6Hero&8]");
+            idColor.put(32, "&8[&6Hero&6+&8]");
+            idColor.put(33, "&8[&6Hero&6+&c+&8]");
+            idColor.put(34, "&8[&aLegend&8]");
+            idColor.put(35, "&8[&aLegend&6+&8]");
+            idColor.put(36, "&8[&aLegend&6+&c+&8]");
         }
-        if(spamList.isEmpty()){
+        if (spamList.isEmpty()) {
             spamList.put(1, "bg");
             spamList.put(2, "hax");
             spamList.put(3, "n00b");
@@ -149,6 +167,7 @@ public class Rankup implements Listener,CommandExecutor {
             spamList.put(7, "bg");
         }
         spamAmount = 7;
+
     }
 
     public static void openRankUp(Player p){
@@ -207,6 +226,12 @@ public class Rankup implements Listener,CommandExecutor {
                         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mansave");
 
                         p.chat("gg");
+
+                        Methods.shootFirework(p);
+                        Methods.shootFirework(p);
+                        Methods.shootFirework(p);
+                        Methods.shootFirework(p);
+                        Methods.shootFirework(p);
 
                         Player tim = Bukkit.getPlayer("Cooltimmetje");
                         if(tim != null){

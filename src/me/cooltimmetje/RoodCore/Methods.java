@@ -4,15 +4,13 @@ import com.evilmidget38.UUIDFetcher;
 import io.puharesource.mc.titlemanager.api.ActionbarTitleObject;
 import io.puharesource.mc.titlemanager.api.TabTitleObject;
 import io.puharesource.mc.titlemanager.api.TitleObject;
+import me.cooltimmetje.RoodCore.Managers.ConfigManager;
 import me.cooltimmetje.RoodCore.Managers.ResourcePackManager;
 import me.cooltimmetje.RoodCore.Tokens.TokensGiver;
 import me.cooltimmetje.RoodCore.Tokens.TokensShop.Rankup;
 import mkremins.fanciful.FancyMessage;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -363,6 +361,24 @@ public class Methods {
         }
 
         return c;
+    }
+
+    public static String color(String s){
+        return s.replace('&', '§');
+    }
+
+    public static void msgPlayerTag(String tag, String msg, Player p){
+        p.sendMessage(color("&9" + tag + "> &a" + msg));
+    }
+
+    public static void giveTokens(int amount, String reason, Player p){
+        int curTokens = TokensGiver.tokensAmount.get(p.getName());
+        curTokens = curTokens + amount;
+        msgPlayer("&9+" + amount + " tokens! (" + reason +")", p);
+        sendAction("&9+" + amount + " tokens! (" + reason +")", p);
+        p.playSound(p.getLocation(), Sound.NOTE_PIANO, 100, 1);
+        TokensGiver.tokensAmount.put(p.getName(), curTokens);
+        ConfigManager.saveData(p);
     }
 
 }
